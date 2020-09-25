@@ -1,0 +1,39 @@
+name: CI/CD
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test_suite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v2
+      - name: Set Up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          export API_KEY=${{ secrets.API_KEY }}
+      - name: Run Tests
+        run: |
+          python -m unittest discover src/
+#  deployment:
+#    needs: test_suite
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Fresh clone & repo install
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: 54.234.255.17
+#          username: github-actions
+#          key: ${{ secrets.GH_ACTIONS }}
+#          port: 22
+#          script: |
+#            rm -rf squiz
+#            git clone https://github.com/petelah/squiz.git
+#            python3.8 -m venv /home/github-actions/squiz/venv
+#            /home/github-actions/squiz/venv/bin/pip3.8 install -r /home/github-actions/squiz/requirements.txt
