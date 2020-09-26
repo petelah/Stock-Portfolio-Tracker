@@ -29,8 +29,9 @@ class TestApi(unittest.TestCase):
 
 	def test_add_stock(self):
 		mock_args = ["AA", 10, 50, "2010-04-03"]
-		result = Portfolio()
+		# result = Portfolio()
 		with mock.patch('builtins.input') as mocked_input:
 			mocked_input.side_effect = mock_args
-			result.add_stock()
+			#result.add_stock()
+			result = Portfolio()
 		self.assertTrue(result.portfolio['AA'], True)

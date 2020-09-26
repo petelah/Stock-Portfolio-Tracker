@@ -24,7 +24,7 @@ export API_KEY=IUGURH&3894F
 python main.py
 ```
 
-##### First Run
+### First Run
 You will be prompted to enter some stocks you are holding 
 separated by ", " ie: IBM, AAPL, ZM.
 
