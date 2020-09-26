@@ -25,7 +25,6 @@ def once_a_minute(func, last_time, counter):
 
 class StockDataReader:
 	apikey = environ.get('API_KEY')
-	# apikey = "OA3PLX8XMSVHSQX4"  # Use env later
 	url = "https://www.alphavantage.co/query?"
 
 	@classmethod
