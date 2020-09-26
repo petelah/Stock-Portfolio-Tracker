@@ -3,3 +3,5 @@ env
 .mypy_cache
 timeline/
 Portfolio.drawio
+.DS_Store
+apikey.txt
