@@ -31,24 +31,7 @@ class StockDataReader:
 	def get_data(cls, symbol: str) -> str:
 		stock_data = requests.get(
 			f"{cls.url}function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&outputsize=compact&apikey={cls.apikey}")
-
-		# time_series = stock_data["Time Series (Daily)"].items()
-		# ret_data = float(list(time_series)[0][1]['4. close'])
 		return stock_data
-
-	# @classmethod
-	# def get_data(cls, symbol: str) -> str:
-	# 	stock_data = requests.get(
-	# 		f"{cls.url}function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&outputsize=compact&apikey={cls.apikey}")
-	# 	if "Note" in stock_data.json():
-	# 		print("Too many requests.. Waiting 60 Seconds..")
-	# 		sleep(60)
-	# 		stock_data = requests.get(
-	# 			f"{cls.url}function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&outputsize=compact&apikey={cls.apikey}")
-	#
-	# 	# time_series = stock_data["Time Series (Daily)"].items()
-	# 	# ret_data = float(list(time_series)[0][1]['4. close'])
-	# 	return stock_data
 
 	@classmethod
 	def last_price(cls, data):
@@ -97,7 +80,7 @@ class DataHandler:
 	@staticmethod
 	def validate_entry(symbol, date, amount, price, last_price):
 		if last_price == "error":
-			return "Please check your input and try again."
+			return "Please enter a valid symbol."
 		if not isinstance(symbol, str):
 			return "Symbol must be letters only."
 		if not isinstance(date, str) and len(date) < 10:
