@@ -29,7 +29,7 @@ class Portfolio:
 	def update_stock(self, key, data):
 		key = key
 		data = data
-		last_price = StockDataReader.last_price(data)
+		last_price = float(StockDataReader.last_price(data))
 		self.portfolio[key]['Last Price $'] = last_price
 		self.portfolio[key]['Return %'] = round(
 			(last_price / self.portfolio[key]['Price $']) * 100, 2)

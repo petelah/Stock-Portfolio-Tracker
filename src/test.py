@@ -50,7 +50,7 @@ class TestApi(unittest.TestCase):
 			data = StockDataReader.get_data("AA")
 			last_price = StockDataReader.last_price(data)
 			result.update_stock("AA", data)
-			if last_price == result.portfolio['AA']['Last Price']:
+			if last_price == result.portfolio['AA']['Last Price $']:
 				assertion = True
 			else:
 				assertion = False
