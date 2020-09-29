@@ -1,7 +1,15 @@
+autopep8==1.5.4
 certifi==2020.6.20
 chardet==3.0.4
+flake8==3.8.3
 idna==2.10
+importlib-metadata==2.0.0
+mccabe==0.6.1
 npyscreen==4.10.5
+pycodestyle==2.6.0
+pyflakes==2.2.0
 requests==2.24.0
 termcolor==1.1.0
+toml==0.10.1
 urllib3==1.25.10
+zipp==3.2.0

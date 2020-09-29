@@ -1,10 +1,9 @@
 import unittest
 from unittest import mock
-from unittest.mock import MagicMock, Mock
-import builtins
 
 from src.utils import StockDataReader, DataHandler
 from src.portfolio import Portfolio
+
 
 class TestApi(unittest.TestCase):
 	def test_get(self):
@@ -36,7 +35,6 @@ class TestApi(unittest.TestCase):
 			mock_args = ["AA", 10, 50, "2010-04-03"]
 			with mock.patch('builtins.input') as mocked_input:
 				mocked_input.side_effect = mock_args
-				# result.add_stock()
 				result = Portfolio()
 			self.assertTrue(result.portfolio['AA'], True)
 

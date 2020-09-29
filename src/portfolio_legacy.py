@@ -1,10 +1,16 @@
-from utils import StockDataReader, DataHandler
+from src.utils import StockDataReader, DataHandler
 
 
 class Portfolio:
 
 	def __init__(self):
-		self.portfolio = self.load_portfolio()
+		self.portfolio = self.create_portfolio()
+
+	def print_portfolio(self):
+		for key, value in self.portfolio.items():
+			print(f"{key}:")
+			for k, v in self.portfolio[key].items():
+				print(f"{k}: {v}")
 
 	def input_questions(self):
 		stock = input("Enter the stock ticker: ")
@@ -13,8 +19,8 @@ class Portfolio:
 		date = input("Date of purchase(yyyy-mm-dd): ")
 		return stock, price, amount, date
 
-	def add_stock(self, stock, price, amount, date):
-		# stock, price, amount, date = self.input_questions()
+	def add_stock(self):
+		stock, price, amount, date = self.input_questions()
 		last_price = StockDataReader.last_price(
 			StockDataReader.get_data(stock))
 		self.portfolio[stock] = {
@@ -59,12 +65,14 @@ class Portfolio:
 				}
 			return values
 
-	def update_stock(self, key, data):
-		key = key
-		data = data
-		last_price = StockDataReader.last_price(data)
-		self.portfolio[key]['Last Price'] = last_price
-		self.portfolio[key]['Return Pct'] = round(
-			(last_price / self.portfolio[key]['Price']) * 100, 2)
-		self.portfolio[key]['Return Dollar'] = round(
-			last_price * self.portfolio[key]['Amount'], 2)
+	def update_portfolio(self):
+		for key, _ in self.portfolio.items():
+			print(f"Updating: {key}")
+			last_price = StockDataReader.last_price(
+				StockDataReader.get_data(key))
+			self.portfolio[key]['Last Price'] = last_price
+			self.portfolio[key]['Return Pct'] = round(
+				(last_price / self.portfolio[key]['Price']) * 100, 2)
+			self.portfolio[key]['Return Dollar'] = round(
+				last_price * self.portfolio[key]['Amount'], 2)
+		print("Update complete!")

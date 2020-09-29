@@ -5,3 +5,6 @@ timeline/
 Portfolio.drawio
 .DS_Store
 apikey.txt
+src/portfolio.json.bak
+portfolio.json.bak
+src/main_legacy.py
