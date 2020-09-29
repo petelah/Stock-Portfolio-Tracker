@@ -35,26 +35,38 @@ class UpdatePortfolio(npyscreen.Popup):
 		self.update_button = self.add(npyscreen.ButtonPress, name="Update", rely=1, relx=1,
 		                              when_pressed_function=self.update_press)
 		self.update_msg = self.add(npyscreen.FixedText, value="Press update to continue.")
+		self.update_msg2 = self.add(npyscreen.FixedText, value="")
 
 	def update_portfolio(self):
-		for key, _ in current_portoflio.portfolio.items():
-			self.update_msg.value = f"Updating {key}..."
-			self.display()
-			data = StockDataReader.get_data(key)
-			if "Note" in data.json():
-				self.update_msg.value = f"Waiting 60 seconds to update {key}..."
-				self.display()
-				sleep(60)
+		length = len(current_portoflio.portfolio)-1
+		if length > 0:
+			for idx, (key, _) in enumerate(current_portoflio.portfolio.items()):
+				if idx == 4:
+					self.update_msg.value = f"Waiting 60 seconds to update {key}..."
+					self.update_msg.value = f"Don't forget to buy premium ;)..."
+					self.display()
 				data = StockDataReader.get_data(key)
-			current_portoflio.update_stock(key, data)
-		self.update_msg.value = f"Update complete. Press OK to continue."
+				self.update_msg.value = f"Updating {key}..."
+				self.display()
+
+				# if "Note" in data.json():
+				# 	self.update_msg.value = f"Waiting 60 seconds to update {key}..."
+				# 	self.update_msg.value = f"Don't forget to buy premium ;)..."
+				# 	self.display()
+				# 	sleep(60)
+				# 	data = StockDataReader.get_data(key)
+				current_portoflio.update_stock(key, data)
+			self.update_msg.value = f"Update complete. Press OK to continue."
+		else:
+			self.update_msg.value = f"No portfolio found. Please add stocks."
 		self.display()
 
 	def afterEditing(self):
 		self.update_msg.value = f" "
 		to_main = self.parentApp.getForm('MAIN')
-		to_main.load_portfolio()
-		to_main.load_performance()
+		if len(current_portoflio.portfolio) > 0:
+			to_main.load_portfolio()
+			to_main.load_performance()
 		self.parentApp.switchForm("MAIN")
 
 	def update_press(self):
@@ -97,6 +109,13 @@ class AddStock(npyscreen.ActionPopup):
 				sleep(1.5)
 				self.parentApp.switchForm("MAIN")
 
+	def afterEditing(self):
+		self.symbol.value = ""
+		self.date.value = ""
+		self.amount.value = ""
+		self.price.value = ""
+		self.display()
+
 	def on_cancel(self):
 		self.symbol.value = ""
 		self.date.value = ""
@@ -118,12 +137,7 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
 		self.welcome_msg = self.add(npyscreen.FixedText, value=welcome, rely=2)
 		self.welcome_msg2 = self.add(npyscreen.FixedText, value=welcome_line2, rely=3)
 		self.top_message = self.add(npyscreen.FixedText, value="", relx=8, rely=4)
-		if not DataHandler.check_portfolio_exists():
-			self.top_message.value = no_portfolio_msg
-		else:
-			self.top_message.value = "Portfolio:"
-			self.load_portfolio()
-			self.load_performance()
+
 		# ====================== End init portfolio ====================
 
 		# ====================== Menu section ==========================
@@ -144,6 +158,12 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
 
 		self.exit_button = self.add(npyscreen.ButtonPress, name="Exit", rely=29, relx=106,
 		                            when_pressed_function=self.exit_press)
+		if not DataHandler.check_portfolio_exists():
+			self.top_message.value = no_portfolio_msg
+		else:
+			self.top_message.value = "Portfolio:"
+			self.load_portfolio()
+			self.load_performance()
 
 	def load_performance(self):
 		for key, _ in current_portoflio.portfolio.items():

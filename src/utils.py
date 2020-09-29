@@ -39,6 +39,13 @@ class StockDataReader:
 		try:
 			time_series = data["Time Series (Daily)"].items()
 			ret_data = float(list(time_series)[0][1]['4. close'])
+			if "Note" in time_series:
+				symbol = data["Meta Data"]["2. Symbol"]
+				print("Too many requests, waiting 60 seconds.")
+				sleep(61)
+				data = cls.get_data(symbol).json()
+				time_series = data["Time Series (Daily)"].items()
+				ret_data = float(list(time_series)[0][1]['4. close'])
 			return ret_data
 		except:
 			return "error"

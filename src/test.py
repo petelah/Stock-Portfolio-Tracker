@@ -49,10 +49,6 @@ class TestApi(unittest.TestCase):
 			result.add_stock("AA", 10, 50, "2010-04-03")
 			data = StockDataReader.get_data("AA")
 			last_price = StockDataReader.last_price(data)
-			if "error" in last_price:
-				print("Too many requests.. waiting 60 seconds...")
-				sleep(61)
-				last_price = StockDataReader.last_price(data)
 			result.update_stock("AA", data)
 			if last_price == result.portfolio['AA']['Last Price $']:
 				assertion = True
