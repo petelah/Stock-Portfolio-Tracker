@@ -26,37 +26,32 @@ class TestApi(unittest.TestCase):
 
 	def test_portfolio(self):
 		"""
-		Testing portfolio creation. initialisation and user input.
+		Testing portfolio creation. initialisation and add stock.
 		"""
 		if DataHandler.check_portfolio_exists():
 			result = Portfolio()
 			self.assertIsInstance(result.portfolio, dict)
 		else:
-			mock_args = ["AA", 10, 50, "2010-04-03"]
-			with mock.patch('builtins.input') as mocked_input:
-				mocked_input.side_effect = mock_args
-				result = Portfolio()
+			result = Portfolio()
+			result.add_stock("AA", 10, 50, "2010-04-03")
 			self.assertTrue(result.portfolio['AA'], True)
 
-	def test_add_stock(self):
+
+	def test_update(self):
 		"""
-		Testing adding a stock after portfolio has been initialised.
-		Must init a new portfolio if portfolio.json not found.
-		:return:
+		Testing portfolio creation. initialisation and add stock.
 		"""
-		if not DataHandler.check_portfolio_exists():
-			mock_args1 = ["AA", 10, 50, "2010-04-03"]
-			mock_args2 = ["FB", 10, 50, "2010-04-03"]
-			with mock.patch('builtins.input') as mocked_input:
-				mocked_input.side_effect = mock_args1
-				result = Portfolio()
-				mocked_input.side_effect = mock_args2
-				result.add_stock()
-			self.assertTrue(result.portfolio['FB'], True)
-		else:
-			mock_args = ["FB", 10, 50, "2010-04-03"]
+		if DataHandler.check_portfolio_exists():
 			result = Portfolio()
-			with mock.patch('builtins.input') as mocked_input:
-				mocked_input.side_effect = mock_args
-				result.add_stock()
-			self.assertTrue(result.portfolio['FB'], True)
+			self.assertIsInstance(result.portfolio, dict)
+		else:
+			result = Portfolio()
+			result.add_stock("AA", 10, 50, "2010-04-03")
+			data = StockDataReader.get_data("AA")
+			last_price = StockDataReader.last_price(data)
+			result.update_stock("AA", data)
+			if last_price == result.portfolio['AA']['Last Price']:
+				assertion = True
+			else:
+				assertion = False
+			self.assertTrue(assertion, True)

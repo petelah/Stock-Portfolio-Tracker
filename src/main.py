@@ -12,19 +12,10 @@ current_portoflio = Portfolio()
 class DeleteStock(npyscreen.ActionPopup):
 	list_stocks = []
 
-
 	def create(self):
 		self.add(npyscreen.FixedText, value="Type in symbole to delete.")
 		self.symbol = self.add(npyscreen.TitleText, name="Symbol: ", begin_entry_at=8, use_two_lines=False)
-		#self.load_stocks()
-		# self.checkbox = self.add(npyscreen.TitleMultiSelect, name="Select to delete: ",
-		#          values=self.list_stocks)
 		self.status_msg = self.add(npyscreen.FixedText, value="")
-
-	def load_stocks(self):
-		self.list_stocks = []
-		for key, _ in current_portoflio.portfolio.items():
-			self.list_stocks.append(key)
 
 	def on_ok(self):
 		symbol = self.symbol.value.upper()
@@ -124,10 +115,8 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
 
 	def create(self):
 		# ====================== Init portfolio ========================
-		self.welcome_msg = self.add(npyscreen.FixedText,
-		                            value=welcome, rely=2)
-		self.welcome_msg2 = self.add(npyscreen.FixedText,
-		                            value=welcome_line2, rely=3)
+		self.welcome_msg = self.add(npyscreen.FixedText, value=welcome, rely=2)
+		self.welcome_msg2 = self.add(npyscreen.FixedText, value=welcome_line2, rely=3)
 		self.top_message = self.add(npyscreen.FixedText, value="", relx=8, rely=4)
 		if not DataHandler.check_portfolio_exists():
 			self.top_message.value = no_portfolio_msg
@@ -135,8 +124,6 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
 			self.top_message.value = "Portfolio:"
 			self.load_portfolio()
 			self.load_performance()
-
-
 		# ====================== End init portfolio ====================
 
 		# ====================== Menu section ==========================
@@ -160,8 +147,8 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
 
 	def load_performance(self):
 		for key, _ in current_portoflio.portfolio.items():
-			self.initial_investment += current_portoflio.portfolio[key]["Initial Investment"]
-			self.return_dollar += current_portoflio.portfolio[key]["Return Dollar"]
+			self.initial_investment += current_portoflio.portfolio[key]["Initial Investment $"]
+			self.return_dollar += current_portoflio.portfolio[key]["Return $"]
 		self.pct_return = round((self.return_dollar / self.initial_investment) * 100, 2)
 		self.main_ii.value = f"Initial Investment: ${self.initial_investment}"
 		self.main_rd.value = f"Returned Amount: ${self.return_dollar}"
@@ -183,10 +170,6 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
 
 	def change_form_delete(self):
 		self.parentApp.switchForm("DELETE")
-
-	def change_form_init(self):
-		self.parentApp.getForm('INIT')
-		self.parentApp.switchForm("INIT")
 
 	def load_portfolio(self):
 		for obj in self.stock_object_list:
