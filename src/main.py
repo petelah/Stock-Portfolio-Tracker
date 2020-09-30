@@ -18,9 +18,7 @@ class DeleteStock(npyscreen.ActionPopup):
 		self.status_msg = self.add(npyscreen.FixedText, value="")
 
 	def on_ok(self):
-		symbol = self.symbol.value.upper()
-		if symbol in current_portoflio.portfolio.keys():
-			current_portoflio.portfolio.pop(symbol)
+		if current_portoflio.delete_stock(self.symbol.value):
 			self.symbol.value = ""
 			to_main = self.parentApp.getForm('MAIN')
 			to_main.load_portfolio()
@@ -28,6 +26,7 @@ class DeleteStock(npyscreen.ActionPopup):
 			self.parentApp.switchForm("MAIN")
 		else:
 			self.status_msg.value = "Symbol not found."
+		self.display()
 
 
 class UpdatePortfolio(npyscreen.Popup):

@@ -1,5 +1,4 @@
 import unittest
-from time import sleep
 
 from src.utils import StockDataReader, DataHandler
 from src.portfolio import Portfolio
@@ -55,3 +54,11 @@ class TestApi(unittest.TestCase):
 			else:
 				assertion = False
 			self.assertTrue(assertion, True)
+
+	def test_delete(self):
+		"""
+		Testing deletion of stock.
+		"""
+		result = Portfolio()
+		result.add_stock("AA", 10, 50, "2010-04-03")
+		self.assertTrue(result.delete_stock("AA"), True)

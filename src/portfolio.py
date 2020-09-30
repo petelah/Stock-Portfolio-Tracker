@@ -34,3 +34,11 @@ class Portfolio:
 			(last_price / self.portfolio[key]['Price $']) * 100, 2)
 		self.portfolio[key]['Return $'] = round(
 			last_price * self.portfolio[key]['Amount'], 2)
+
+	def delete_stock(self, symbol: str) -> bool:
+		symbol = symbol.upper()
+		try:
+			self.portfolio.pop(symbol)
+			return True
+		except KeyError:
+			return False
