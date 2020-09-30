@@ -15,11 +15,30 @@ your data collection.
 Currently only supports stocks listed on US exhanges(NASDAQ, NYSE, AMEX).
 
 The terminal GUI is built on top of npyscreen framework created by Nicholas Cole https://github.com/npcole/npyscreen.
-Great framework to work with, I hope he releases from future updates, it looks very promising!
+Great framework to work with, I hope he releases more future updates.
 
 If you ask nicely I may add in your beloved crypto markets too =)
 
 ## Installation
+#### Dependencies
+* autopep8==1.5.4
+* certifi==2020.6.20
+* chardet==3.0.4
+* flake8==3.8.3
+* idna==2.10
+* importlib-metadata==2.0.0
+* mccabe==0.6.1
+* npyscreen==4.10.5
+* pycodestyle==2.6.0
+* pyflakes==2.2.0
+* requests==2.24.0
+* termcolor==1.1.0
+* toml==0.10.1
+* urllib3==1.25.10
+* zipp==3.2.0
+
+#### Setup & Run
+
 Set up your desired method of python virtual environment.
 Activate your environment and run the following:
 ```
@@ -33,7 +52,11 @@ From root directory:
 ```
 python src/main.py
 ```
-### First Run & Usage
+#### First Run
+Your terminal screen will need to be certain size for it to run(122w x 32h) derived as 
+lines x columns. Or you can just open it in a full screen window and resize to 
+the appropriate height.
+
 You will be asked to open the menu and add a stock to track. This can be done using 
 ^X(CTRL + X) to open the main menu. Select Add stock by pressing 1 or Enter on the 
 menu item. Fill in the form and it will return the stock and update the portfolio if 
@@ -42,9 +65,16 @@ the provided symbol is valid
 Once your first lot of stocks are in you can then run the 
 update function whenever you want to get the latest end of day 
 pricing and recalculation of your portfolio holdings.
+#### Usage
+The menu can be activated from the main menu using ^X(CTRL+X).
+Navigating through the menu's you can either press enter on the desired selection, press the corresponding 
+number or click to select and enter to proceed, clicking will work with all elements as well to select them.
 
 ## Release History
 
+* 0.2.2
+    * FIX: Added a little solution to run even if the terminal height and width isn't right.
+    You will just need to resize it out instead.
 * 0.2.1
     * CHANGE: Update docs to reflect GUI addition.
 * 0.2.0
@@ -76,6 +106,7 @@ pricing and recalculation of your portfolio holdings.
 - Add colour
 - About page
 - Date verification
+- Pagination for bigger portfolio
 - Update tracking, if user already updated today, then don't update(NYC time after 4pm)
 - Threading to pass off updating stocks in background
 

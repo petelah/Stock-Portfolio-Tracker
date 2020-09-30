@@ -1,12 +1,22 @@
 import npyscreen
 import sys
+from os import system
 
 from utils import DataHandler, StockDataReader
 from portfolio import Portfolio
 from messages import *
 from time import sleep
 
+# Set the console lines
+system('mode con: cols=122 lines=32')
 current_portoflio = Portfolio()
+
+class SaveToPDF(npyscreen.ActionPopup):
+	def create(self):
+		self.add(npyscreen.FixedText, value="Please purchase premium to use this feature =).")
+
+	def on_ok(self):
+		self.parentApp.switchForm("MAIN")
 
 
 class DeleteStock(npyscreen.ActionPopup):
@@ -222,10 +232,11 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
 class App(npyscreen.NPSAppManaged):
 
 	def onStart(self):
-		self.addForm('MAIN', MainForm, name="Stock Tracker - By Peter Seabrook - V 0.03a", lines=32, columns=122)
+		self.addForm('MAIN', MainForm, name="Stock Tracker - By Peter Seabrook - V0.2.2", lines=32, columns=122)
 		self.addForm('ADD', AddStock, name="Add a stock")
 		self.addForm('UPDATEPORT', UpdatePortfolio, name="Portfolio Updating")
 		self.addForm('DELETE', DeleteStock, name="Delete Stocks")
+		self.addForm('SAVEPDF', SaveToPDF, name="Save to PDF")
 
 	class InputBox(npyscreen.BoxTitle):
 		# MultiLineEdit now will be surrounded by boxing

@@ -101,3 +101,7 @@ class DataHandler:
 		except ValueError:
 			return "Price must be a number: 45.5."
 		return True
+
+	@staticmethod
+	def date_validation(date):
+		pass
