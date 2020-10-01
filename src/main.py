@@ -126,7 +126,7 @@ class AddStock(npyscreen.ActionPopup):
                 self.amount.value,
                 self.price.value,
                 last_price)
-            if not validation:
+            if validation != True:
                 self.status_msg.value = validation
                 self.display()
             else:
@@ -233,9 +233,9 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
             self.return_dollar += current_portoflio.portfolio[key]["Return $"]
         self.pct_return = round(
             (self.return_dollar / self.initial_investment) * 100, 2)
-        self.main_ii.value = f"Initial Investment: ${self.initial_investment}"
-        self.main_rd.value = f"Returned Amount: ${self.return_dollar}"
-        self.main_pr.value = f"Returned Percent: {self.pct_return}%"
+        self.main_ii.value = f"Initial Investment: ${round(self.initial_investment, 2)}"
+        self.main_rd.value = f"Returned Amount: ${round(self.return_dollar, 2)}"
+        self.main_pr.value = f"Returned Percent: {round(self.pct_return, 2)}%"
         self.display()
 
     def exit_press(self):
