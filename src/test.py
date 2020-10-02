@@ -36,24 +36,24 @@ class TestApi(unittest.TestCase):
 			self.assertTrue(result.portfolio['AA'], True)
 
 
-	# def test_update(self):
-	# 	"""
-	# 	Testing portfolio creation. initialisation and add stock.
-	# 	"""
-	# 	if DataHandler.check_portfolio_exists():
-	# 		result = Portfolio()
-	# 		self.assertIsInstance(result.portfolio, dict)
-	# 	else:
-	# 		result = Portfolio()
-	# 		result.add_stock("AA", 10, 50, "2010-04-03")
-	# 		data = StockDataReader.get_data("AA")
-	# 		last_price = StockDataReader.last_price(data)
-	# 		result.update_stock("AA", data)
-	# 		if last_price == result.portfolio['AA']['Last Price $']:
-	# 			assertion = True
-	# 		else:
-	# 			assertion = False
-	# 		self.assertTrue(assertion, True)
+	def test_update(self):
+		"""
+		Testing portfolio creation. initialisation and add stock.
+		"""
+		if DataHandler.check_portfolio_exists():
+			result = Portfolio()
+			self.assertIsInstance(result.portfolio, dict)
+		else:
+			result = Portfolio()
+			result.add_stock("AA", 10, 50, "2010-04-03")
+			data = StockDataReader.get_data("AA")
+			last_price = StockDataReader.last_price(data)
+			result.update_stock("AA", data)
+			if last_price == result.portfolio['AA']['Last Price $']:
+				assertion = True
+			else:
+				assertion = False
+			self.assertTrue(assertion, True)
 
 	def test_delete(self):
 		"""
