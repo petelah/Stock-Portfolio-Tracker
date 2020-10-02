@@ -1,7 +1,7 @@
 import unittest
 
-from src.utils import StockDataReader, DataHandler
-from src.portfolio import Portfolio
+from utilities import StockDataReader, DataHandler
+from portfolio import Portfolio
 
 
 class TestApi(unittest.TestCase):

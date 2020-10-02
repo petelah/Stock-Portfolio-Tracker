@@ -1,4 +1,4 @@
-from utils import StockDataReader, DataHandler
+from utilities import StockDataReader, DataHandler
 
 
 class Portfolio:

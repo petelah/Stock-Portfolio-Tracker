@@ -1,47 +1,19 @@
-import npyscreen
 import sys
 from os import system
-
-from utils import DataHandler, StockDataReader
-from portfolio import Portfolio
-from messages import *
 from time import sleep
 
-# Set the console lines
+import npyscreen
+from utilities import DataHandler, StockDataReader
+from utilities.messages import *
+from screens import SaveToPDF, About
+from portfolio import Portfolio
+
+
+# Set the console lines.
 system('mode con: cols=122 lines=32')
+
+# Setup current portfolio to use.
 current_portoflio = Portfolio()
-
-
-class SaveToPDF(npyscreen.Popup):
-    def create(self):
-        self.add(
-            npyscreen.FixedText,
-            value="Please purchase premium to use this feature =).")
-
-    def afterEditing(self):
-        self.parentApp.switchForm("MAIN")
-
-
-class About(npyscreen.Popup):
-    def create(self):
-        self.add(
-            npyscreen.FixedText,
-            value="Created by Peter Seabrook.")
-        self.add(
-            npyscreen.FixedText,
-            value="www.peterseabrook.com")
-        self.add(
-            npyscreen.FixedText,
-            value="www.github.com/petelah")
-        self.add(
-            npyscreen.FixedText,
-            value="This app is free to use under GNU license.")
-        self.add(
-            npyscreen.FixedText,
-            value="Copyright Peter Seabrook 2020.")
-
-    def afterEditing(self):
-        self.parentApp.switchForm("MAIN")
 
 
 class DeleteStock(npyscreen.ActionPopup):
@@ -211,6 +183,7 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
             "5")
         # ====================== End menu section ======================
 
+        # ====================== Main content section ==================
         self.add(npyscreen.FixedText, value="Performance:", relx=8, rely=26)
 
         self.main_ii = self.add(
@@ -228,6 +201,7 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
                                 relx=8,
                                 rely=29
                                 )
+        # ====================== End ain content section ===============
 
         self.exit_button = self.add(
             npyscreen.ButtonPress,

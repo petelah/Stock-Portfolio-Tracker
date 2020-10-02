@@ -1,1 +1,0 @@
-last_api_time = None
