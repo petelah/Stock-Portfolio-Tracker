@@ -12,13 +12,35 @@ system('mode con: cols=122 lines=32')
 current_portoflio = Portfolio()
 
 
-class SaveToPDF(npyscreen.ActionPopup):
+class SaveToPDF(npyscreen.Popup):
     def create(self):
         self.add(
             npyscreen.FixedText,
             value="Please purchase premium to use this feature =).")
 
-    def on_ok(self):
+    def afterEditing(self):
+        self.parentApp.switchForm("MAIN")
+
+
+class About(npyscreen.Popup):
+    def create(self):
+        self.add(
+            npyscreen.FixedText,
+            value="Created by Peter Seabrook.")
+        self.add(
+            npyscreen.FixedText,
+            value="www.peterseabrook.com")
+        self.add(
+            npyscreen.FixedText,
+            value="www.github.com/petelah")
+        self.add(
+            npyscreen.FixedText,
+            value="This app is free to use under GNU license.")
+        self.add(
+            npyscreen.FixedText,
+            value="Copyright Peter Seabrook 2020.")
+
+    def afterEditing(self):
         self.parentApp.switchForm("MAIN")
 
 
@@ -118,25 +140,13 @@ class AddStock(npyscreen.ActionPopup):
         if len(current_portoflio.portfolio) == 6:
             self.status_msg.value = "Max 6 stocks allowed. Please purchase premium version!"
         else:
-            last_price = StockDataReader.last_price(
-                StockDataReader.get_data(self.symbol.value))
-            validation = DataHandler.validate_entry(
+            result = current_portoflio.add_stock(
                 self.symbol.value,
-                self.date.value,
-                self.amount.value,
                 self.price.value,
-                last_price)
-            if validation != True:
-                self.status_msg.value = validation
-                self.display()
-            else:
-                current_portoflio.add_stock(
-                    self.symbol.value,
-                    float(self.price.value),
-                    float(self.amount.value),
-                    self.date.value
-
-                )
+                self.amount.value,
+                self.date.value
+            )
+            if result == True:
                 self.status_msg.value = f"Grabbing data for {self.symbol.value}"
                 to_main = self.parentApp.getForm('MAIN')
                 to_main.load_portfolio()
@@ -144,21 +154,22 @@ class AddStock(npyscreen.ActionPopup):
                 to_main.top_message.value = "Portfolio:"
                 self.display()
                 sleep(1.5)
+                self.symbol.value = ""
+                self.date.value = ""
+                self.amount.value = ""
+                self.price.value = ""
+                self.status_msg.value = ""
                 self.parentApp.switchForm("MAIN")
-
-    def afterEditing(self):
-        self.symbol.value = ""
-        self.date.value = ""
-        self.amount.value = ""
-        self.price.value = ""
-        self.display()
+            else:
+                self.status_msg.value = result
+                self.display()
 
     def on_cancel(self):
         self.symbol.value = ""
         self.date.value = ""
         self.amount.value = ""
         self.price.value = ""
-        self.display()
+        self.status_msg.value = ""
         self.parentApp.getForm('MAIN')
         self.parentApp.switchForm("MAIN")
 
@@ -194,6 +205,10 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
             "4. Delete Stock form portfolio",
             self.change_form_delete,
             "4")
+        self.menu.addItem(
+            "5. About",
+            self.change_form_about,
+            "5")
         # ====================== End menu section ======================
 
         self.add(npyscreen.FixedText, value="Performance:", relx=8, rely=26)
@@ -247,6 +262,9 @@ class MainForm(npyscreen.FormBaseNewWithMenus):
     def change_form_add(self):
         self.parentApp.switchForm("ADD")
 
+    def change_form_about(self):
+        self.parentApp.switchForm("ABOUT")
+
     def change_form_save_pdf(self):
         self.parentApp.switchForm("SAVEPDF")
 
@@ -298,6 +316,7 @@ class App(npyscreen.NPSAppManaged):
         self.addForm('UPDATEPORT', UpdatePortfolio, name="Portfolio Updating")
         self.addForm('DELETE', DeleteStock, name="Delete Stocks")
         self.addForm('SAVEPDF', SaveToPDF, name="Save to PDF")
+        self.addForm('ABOUT', About, name="About")
 
     class InputBox(npyscreen.BoxTitle):
         # MultiLineEdit now will be surrounded by boxing

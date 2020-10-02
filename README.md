@@ -19,6 +19,12 @@ Great framework to work with, I hope he releases more future updates.
 
 If you ask nicely I may add in your beloved crypto markets too =)
 
+## Workflow
+Current workflow is setup to push through GitHub Actions CI/CD pipeline to and Amazon EC2 instance for deployment.
+The pipeline looks like this:
+
+Development machine -> Flake8/Mypy -> GitHub -> Automated testing -> Push to master -> Deploy & run on EC2
+
 ## Installation
 #### Dependencies
 * autopep8==1.5.4
@@ -72,6 +78,12 @@ number or click to select and enter to proceed, clicking will work with all elem
 
 ## Release History
 
+* 0.2.6
+    * CHANGE: Refactoring to be more modular between GUI and class's.
+    * ADD: About page.
+* 0.2.4
+    * CHANGE: Docstring formatting.
+    * ADD: Tests for verification.
 * 0.2.2
     * FIX: Added a little solution to run even if the terminal height and width isn't right.
     You will just need to resize it out instead.
@@ -88,24 +100,23 @@ number or click to select and enter to proceed, clicking will work with all elem
 * 0.1.6
     * ADD: Delete stock function.
 * 0.1.4
-    * ADD: Update stocks function. Iterate through and update all stocks
+    * ADD: Update stocks function. Iterate through and update all stocks.
 * 0.1.1
     * FIX: Added 60 second sleep function when adding more than 5 stocks as AV
     only lets you execute 5 calls per minute.
 * 0.1.0
-    * First major working release
-    * You can now save your portfolio to json format to recall later on
+    * First major working release.
+    * You can now save your portfolio to json format to recall later on.
     * Saving and loading features added, menu system added as well.
 * 0.0.1
-    * Basic terminal app that will display pulled stocks from Alpha Vantage API
+    * Basic terminal app that will display pulled stocks from Alpha Vantage API.
 
 
-### Todo
+### Future Features
 
 - Save to PDF
 - Add colour
 - About page
-- Date verification
 - Pagination for bigger portfolio
 - Update tracking, if user already updated today, then don't update(NYC time after 4pm)
 - Threading to pass off updating stocks in background

@@ -62,3 +62,31 @@ class TestApi(unittest.TestCase):
 		result = Portfolio()
 		result.add_stock("AA", 10, 50, "2010-04-03")
 		self.assertTrue(result.delete_stock("AA"), True)
+
+	def test_verification(self):
+		"""
+		Testing verification method
+		"""
+		# Passing correct data
+		result = DataHandler.validate_entry('IBM', '2020-03-03', 45, 60.5, 112.8)
+		self.assertTrue(result, True)
+
+		# Passing invalid price data
+		result = DataHandler.validate_entry('IBM', '2020-03-03', 45, 'ff', 'error')
+		self.assertEqual(result, "Please enter a valid symbol.")
+
+		# Passing invalid symbol data
+		result = DataHandler.validate_entry(45, '2020-03-03', 45, 60.5, 112.8)
+		self.assertEqual(result, "Symbol must be string.")
+
+		# Passing invalid date data
+		result = DataHandler.validate_entry('IBM', '2020-25-03', 45, 60.5, 112.8)
+		self.assertEqual(result, "Date format: YYYY-MM-DD and must not be a future date.")
+
+		# Passing invalid amount data
+		result = DataHandler.validate_entry('IBM', '2020-03-03', '45f', 60.5, 112.8)
+		self.assertEqual(result, "Number of shares must be a number: '45'.")
+
+		# Passing invalid price data
+		result = DataHandler.validate_entry('IBM', '2020-03-03', 45, 'ff', 112.8)
+		self.assertEqual(result, "Price must be a number: '45.5'.")
