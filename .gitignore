@@ -10,3 +10,6 @@ portfolio.json.bak
 src/main_legacy.py
 legacy/
 Datatesting.ipynb
+.mypy_cache/
+.ipynb_checkpoints
+src/utils.py.bak
