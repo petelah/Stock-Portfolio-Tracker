@@ -29,7 +29,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: 52.207.70.134
-          username: github-actions
+          username: deployment
           key: ${{ secrets.GH_ACTIONS }}
           port: 22
           script: |
