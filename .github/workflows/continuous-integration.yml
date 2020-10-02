@@ -28,13 +28,13 @@ jobs:
       - name: Fresh clone & repo install
         uses: appleboy/ssh-action@master
         with:
-          host: 52.207.70.134
+          host: 3.87.116.220
           username: deployment
           key: ${{ secrets.GH_ACTIONS }}
           port: 22
           script: |
             rm -rf Stock-Portfolio-Tracker
             git clone https://github.com/petelah/Stock-Portfolio-Tracker.git
-            python3.8 -m venv /home/github-actions/Stock-Portfolio-Tracker/venv
-            /home/github-actions/Stock-Portfolio-Tracker/venv/bin/pip3.8 install -r /home/github-actions/Stock-Portfolio-Tracker/requirements.txt
+            python3.8 -m venv /home/deployment/Stock-Portfolio-Tracker/venv
+            /home/deployment/Stock-Portfolio-Tracker/venv/bin/pip3.8 install -r /home/deployment/Stock-Portfolio-Tracker/requirements.txt
             export API_KEY=${{ secrets.API_KEY }}
