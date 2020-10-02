@@ -21,20 +21,20 @@ jobs:
       - name: Run Tests
         run: |
           python -m unittest discover src/
-#  deployment:
-#    needs: test_suite
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Fresh clone & repo install
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: 54.234.255.17
-#          username: github-actions
-#          key: ${{ secrets.GH_ACTIONS }}
-#          port: 22
-#          script: |
-#            rm -rf Stock-Portfolio-Tracker
-#            git clone https://github.com/petelah/Stock-Portfolio-Tracker.git
-#            python3.8 -m venv /home/github-actions/Stock-Portfolio-Tracker/venv
-#            /home/github-actions/Stock-Portfolio-Tracker/venv/bin/pip3.8 install -r /home/github-actions/Stock-Portfolio-Tracker/requirements.txt
-#            export API_KEY=${{ secrets.API_KEY }}
+  deployment:
+    needs: test_suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fresh clone & repo install
+        uses: appleboy/ssh-action@master
+        with:
+          host: 52.207.70.134
+          username: github-actions
+          key: ${{ secrets.GH_ACTIONS }}
+          port: 22
+          script: |
+            rm -rf Stock-Portfolio-Tracker
+            git clone https://github.com/petelah/Stock-Portfolio-Tracker.git
+            python3.8 -m venv /home/github-actions/Stock-Portfolio-Tracker/venv
+            /home/github-actions/Stock-Portfolio-Tracker/venv/bin/pip3.8 install -r /home/github-actions/Stock-Portfolio-Tracker/requirements.txt
+            export API_KEY=${{ secrets.API_KEY }}
