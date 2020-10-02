@@ -33,7 +33,8 @@ jobs:
 #          key: ${{ secrets.GH_ACTIONS }}
 #          port: 22
 #          script: |
-#            rm -rf squiz
-#            git clone https://github.com/petelah/squiz.git
-#            python3.8 -m venv /home/github-actions/squiz/venv
-#            /home/github-actions/squiz/venv/bin/pip3.8 install -r /home/github-actions/squiz/requirements.txt
+#            rm -rf Stock-Portfolio-Tracker
+#            git clone https://github.com/petelah/Stock-Portfolio-Tracker.git
+#            python3.8 -m venv /home/github-actions/Stock-Portfolio-Tracker/venv
+#            /home/github-actions/Stock-Portfolio-Tracker/venv/bin/pip3.8 install -r /home/github-actions/Stock-Portfolio-Tracker/requirements.txt
+#            export API_KEY=${{ secrets.API_KEY }}
