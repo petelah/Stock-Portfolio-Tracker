@@ -59,12 +59,12 @@ class Portfolio:
         """
         key = key
         data = data
-        last_price = StockDataReader.last_price(data)
+        last_price = float(StockDataReader.last_price(data))
         self.portfolio[key]['Last Price $'] = last_price
         self.portfolio[key]['Return %'] = round(
-            (last_price / self.portfolio[key]['Price $']) * 100, 2)
+            (last_price / float(self.portfolio[key]['Price $'])) * 100, 2)
         self.portfolio[key]['Return $'] = round(
-            last_price * self.portfolio[key]['Amount'], 2)
+            last_price * float(self.portfolio[key]['Amount']), 2)
 
     def delete_stock(self, symbol: str) -> bool:
         """
