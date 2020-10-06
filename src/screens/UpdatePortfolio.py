@@ -1,4 +1,5 @@
 import npyscreen
+from time import sleep
 
 from utilities import StockDataReader, DataHandler
 from portfolio import current_portfolio
@@ -22,17 +23,19 @@ class UpdatePortfolio(npyscreen.Popup):
         if length > 0:
             for idx, (key, _) in enumerate(
                     current_portfolio.portfolio.items()):
-                if idx == 4:
+                data = StockDataReader.get_data(key)
+                if not current_portfolio.update_stock(key, data):
                     self.update_msg.value = f"Waiting 60 seconds to update {key}..."
                     self.display()
                     sleep(55)
                     self.update_msg.value = "Don't forget to buy premium ;)..."
                     self.display()
                     sleep(6)
-                data = StockDataReader.get_data(key)
-                self.update_msg.value = f"Updating {key}..."
-                self.display()
-                current_portfolio.update_stock(key, data)
+                    current_portfolio.update_stock(key, data)
+                else:
+                    self.update_msg.value = f"Updating {key}..."
+                    self.display()
+                    sleep(1)
             self.update_msg.value = "Update complete. Press OK to continue."
         else:
             self.update_msg.value = "No portfolio found. Please add stocks."

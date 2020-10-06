@@ -46,7 +46,7 @@ class StockDataReader:
                 time_series = data["Time Series (Daily)"].items()
                 ret_data = float(list(time_series)[0][1]['4. close'])
             return ret_data
-        except BaseException:
+        except:
             return "error"
 
 

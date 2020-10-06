@@ -2,6 +2,7 @@ import npyscreen
 
 from screens import MainForm, SaveToPDF, About, AddStock, UpdatePortfolio, DeleteStock
 
+
 class App(npyscreen.NPSAppManaged):
 
     def onStart(self):

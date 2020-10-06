@@ -1,4 +1,5 @@
 import npyscreen
+import sys
 
 from portfolio import current_portfolio
 from utilities import StockDataReader, DataHandler
